@@ -1,4 +1,4 @@
-c# SharpGPO.exe Kullanım Kılavuzu
+# SharpGPO.exe Kullanım Kılavuzu
 
 ## Giriş
 SharpGPO, Active Directory ortamında Grup Politika Nesneleri (GPO) ile ilgili bilgi toplamak ve bu nesneleri manipüle etmek için tasarlanmış bir siber güvenlik aracıdır. Bu aracın amacı, GPO kullanımı ile ilgili zafiyetleri belirlemek ve bunlardan yararlanmaktır.
