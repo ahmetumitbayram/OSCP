@@ -11,7 +11,7 @@ Bu araç, NTLM hash bilgilerini bir sistemden dökerek analiz etmenizi sağlar.
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-DumpNTLMInfo.py [kullanıcı_adı]:[şifre]@[hedef_ip]
+impacket-DumpNTLMInfo [kullanıcı_adı]:[şifre]@[hedef_ip]
 ```
 
 1. Hedef sistemin IP adresini belirleyin.
@@ -27,7 +27,7 @@ Windows DPAPI (Data Protection API) ile korunan verileri çözmek için kullanı
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-dpapi.py [seçenekler]
+impacket-dpapi [seçenekler]
 ```
 
 1. DPAPI korumalı veriyi belirleyin.
@@ -43,7 +43,7 @@ SMB (Server Message Block) üzerinden saldırılar gerçekleştirmek için kulla
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-karmaSMB.py [IP]
+impacket-karmaSMB [IP]
 ```
 
 1. SMB protokolünü hedef alın.
@@ -59,7 +59,7 @@ Hedef ağda çeşitli ağ sorguları yapmak için kullanılır.
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-net.py [seçenekler] [hedef_ip]
+impacket-net [seçenekler] [hedef_ip]
 ```
 
 1. Hedef ağı analiz edin.
@@ -75,7 +75,7 @@ Active Directory ortamlarında Resource-Based Constrained Delegation saldırıla
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-rbcd.py [kullanıcı_adı]:[şifre]@[domain_adı]
+impacket-rbcd [kullanıcı_adı]:[şifre]@[domain_adı]
 ```
 
 1. Active Directory ortamına erişin.
@@ -91,7 +91,7 @@ Hedef Windows sistemindeki hizmetleri listelemek ve yönetmek için kullanılır
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-services.py [kullanıcı_adı]:[şifre]@[hedef_ip]
+impacket-services [kullanıcı_adı]:[şifre]@[hedef_ip]
 ```
 
 1. Hedef sistemde oturum açın.
@@ -107,7 +107,7 @@ Kerberos biletlerini farklı formatlara dönüştürmek için kullanılır.
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-ticketConverter.py [bilet_dosya_adı]
+impacket-ticketConverter [bilet_dosya_adı]
 ```
 
 1. Kerberos biletini bulun.
@@ -123,7 +123,7 @@ Group Policy Preferences (GPP) içerisinde saklanan şifreleri çıkarır.
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-Get-GPPPassword.py [path_to_xml_file]
+impacket-Get-GPPPassword [path_to_xml_file]
 ```
 
 1. GPP şifrelerini içeren XML dosyasını belirleyin.
@@ -139,7 +139,7 @@ Windows sistemlerde kullanılan Extensible Storage Engine (ESE) veritabanı dosy
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-esentutl.py [veritabanı_dosya_adı]
+impacket-esentutl [veritabanı_dosya_adı]
 ```
 
 1. Analiz edilecek ESE dosyasını bulun.
@@ -155,7 +155,7 @@ KDC'nin (Key Distribution Center) anahtar listelerini sorgular.
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-keylistattack.py [kullanıcı_adı]:[şifre]@[domain_adı]
+impacket-keylistattack [kullanıcı_adı]:[şifre]@[domain_adı]
 ```
 
 1. Domain bilgilerini sağlayın.
@@ -171,7 +171,7 @@ Bir ağdaki tüm paylaşımları ve cihazları görüntülemek için kullanılı
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-netview.py [kullanıcı_adı]:[şifre]@[hedef_ip]
+impacket-netview [kullanıcı_adı]:[şifre]@[hedef_ip]
 ```
 
 1. Hedef ağı belirleyin.
@@ -187,7 +187,7 @@ Hedef sistemin RDP (Remote Desktop Protocol) durumunu kontrol eder.
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-rdp_check.py [IP]
+impacket-rdp_check [IP]
 ```
 
 1. Hedef IP'yi belirleyin.
@@ -203,7 +203,7 @@ SMB protokolü üzerinden dosya paylaşımını yönetmek ve incelemek için kul
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-smbclient.py [kullanıcı_adı]:[şifre]@[hedef_ip]
+impacket-smbclient [kullanıcı_adı]:[şifre]@[hedef_ip]
 ```
 
 1. Hedef sisteme bağlanın.
@@ -219,7 +219,7 @@ Kerberos bileti oluşturmak için kullanılır.
 
 ### Nasıl Kullanılır?
 ```bash
-impacket-ticketer.py -nthash [hash] [kullanıcı_adı]
+impacket-ticketer -nthash [hash] [kullanıcı_adı]
 ```
 
 1. Kullanıcı bilgilerini ve NT hash'i sağlayın.
