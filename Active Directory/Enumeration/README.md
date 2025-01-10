@@ -151,7 +151,32 @@ Invoke-ShareFinder
 
 ---
 
-### 2.6. Açık Oturumları (Sessions) Keşfetme
+### 2.6. SMB Keşfi
+
+#### `smbclient -L //<IP>`
+**Amaç:** Bir hedefteki SMB paylaşımlarını listeler.
+
+```bash
+smbclient -L //<IP>
+```
+
+#### `smbmap -H <IP>`
+**Amaç:** SMB paylaşımlarını ve izinlerini detaylı olarak gösterir.
+
+```bash
+smbmap -H <IP>
+```
+
+#### `crackmapexec smb <IP>`
+**Amaç:** SMB üzerinden hedefteki temel bilgileri alır.
+
+```bash
+crackmapexec smb <IP>
+```
+
+---
+
+### 2.7. Açık Oturumları (Sessions) Keşfetme
 
 #### `query user`
 **Amaç:** Mevcut oturumları listeler.
@@ -169,7 +194,7 @@ Invoke-UserHunter
 
 ---
 
-### 2.7. ACL ve Yetkilendirme Bilgileri Keşfetme
+### 2.8. ACL ve Yetkilendirme Bilgileri Keşfetme
 
 #### `Get-ObjectAcl`
 **Amaç:** Active Directory nesnelerine uygulanan erişim kontrol listelerini (ACL) inceler.
@@ -187,7 +212,7 @@ Find-LocalAdminAccess
 
 ---
 
-### 2.8. SPN Tabanlı Kullanıcı Keşfi
+### 2.9. SPN Tabanlı Kullanıcı Keşfi
 
 #### `setspn -Q */*`
 **Amaç:** Domain'deki SPN (Service Principal Name) tabanlı kullanıcıları bulur.
@@ -205,7 +230,7 @@ Get-NetUser -SPN
 
 ---
 
-### 2.9. DNS Keşfi
+### 2.10. DNS Keşfi
 
 #### `nslookup -type=SRV _ldap._tcp.dc._msdcs.<domain_adı>`
 **Amaç:** Domain Controller hizmetlerini çözümlemek.
@@ -219,6 +244,71 @@ nslookup -type=SRV _ldap._tcp.dc._msdcs.<domain_adı>
 
 ```powershell
 Resolve-DnsName -Type SRV _kerberos._tcp.dc._msdcs.<domain_adı>
+```
+
+---
+
+### 2.11. LDAP Keşfi
+
+#### `ldapsearch -x -h <DC_IP> -b "dc=<domain>,dc=com"`
+**Amaç:** LDAP üzerinden domain bilgilerini almak.
+
+```bash
+ldapsearch -x -h <DC_IP> -b "dc=<domain>,dc=com"
+```
+
+#### `Get-ADUser -Filter *`
+**Amaç:** Tüm kullanıcı bilgilerini LDAP üzerinden almak.
+
+```powershell
+Get-ADUser -Filter * -Properties *
+```
+
+---
+
+### 2.12. RPC Keşfi
+
+#### `rpcclient -U "" <IP>`
+**Amaç:** RPC sunucusuna bağlanmak ve bilgi almak.
+
+```bash
+rpcclient -U "" <IP>
+```
+
+#### `enumdomusers`
+**Amaç:** RPC ile domain kullanıcılarını listelemek.
+
+```bash
+enumdomusers
+```
+
+---
+
+### 2.13. SNMP Keşfi
+
+#### `snmpwalk -v2c -c <community> <IP>`
+**Amaç:** SNMP üzerinden bilgi toplamak.
+
+```bash
+snmpwalk -v2c -c <community> <IP>
+```
+
+---
+
+### 2.14. MSSQL Keşfi
+
+#### `sqsh -S <IP> -U <username>`
+**Amaç:** MSSQL sunucusuna bağlanmak.
+
+```bash
+sqsh -S <IP> -U <username>
+```
+
+#### `xp_cmdshell`
+**Amaç:** MSSQL üzerinden komut çalıştırmak.
+
+```sql
+EXEC xp_cmdshell 'whoami';
 ```
 
 ---
@@ -276,6 +366,17 @@ PingCastle.exe --healthcheck
 
 7. **DNS keşfi yap:**
    - `nslookup -type=SRV _ldap._tcp.dc._msdcs.<domain_adı>`
+
+8. **LDAP, RPC, SNMP ve MSSQL keşiflerini tamamla:**
+   - `ldapsearch`
+   - `rpcclient`
+   - `snmpwalk`
+   - `sqsh`
+
+9. **SMB keşiflerini tamamla:**
+   - `smbclient`
+   - `smbmap`
+   - `crackmapexec smb`
 
 ---
 
