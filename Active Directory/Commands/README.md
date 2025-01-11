@@ -18,3 +18,7 @@ RECONFIGURE;
 -- xp_cmdshell ile whoami komutunu çalıştırmak
 - EXEC xp_cmdshell 'whoami';
 
+
+# Python Web Server
+
+- python3 -m http.server 8000
