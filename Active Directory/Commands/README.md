@@ -22,3 +22,9 @@ RECONFIGURE;
 # Python Web Server
 
 - python3 -m http.server 8000
+
+# Python Virtual Environment
+
+- python3 -m venv myenv
+- source myenv/bin/activate
+- pip install -r requirements.txt
