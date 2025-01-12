@@ -330,7 +330,7 @@ impacket-ticketer -nthash [hash] [kullanıcı_adı]
 
 - **Nasıl kullanılır:**
   ```bash
-  impacket-smbexec <target_ip> <domain>/<username>:<password>
+impacker-smbexec WORKGROUP/username:password@ip
   ```
 
 ---
