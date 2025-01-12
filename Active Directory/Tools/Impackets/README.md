@@ -274,7 +274,7 @@ impacket-ticketer -nthash [hash] [kullanıcı_adı]
 
 - **Nasıl kullanılır:**
   ```bash
-  impacket-lookupsid <target_ip> <domain>/<username>:<password>
+impacket-lookupsid <domain>/<username>:<password>@<target>
   ```
 
 ---
