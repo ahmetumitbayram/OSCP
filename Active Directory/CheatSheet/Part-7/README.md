@@ -91,4 +91,8 @@ set verbose on
 begin backup
 add volume c: alias mydrive
 create
+expose %mydrive% w:
+end backup
+
+} 
 ```
