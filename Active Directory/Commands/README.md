@@ -28,3 +28,8 @@ RECONFIGURE;
 - python3 -m venv myenv
 - source myenv/bin/activate
 - pip install -r requirements.txt
+
+# BloodHound All Datas
+
+- MATCH (n)-[r]->(m)
+- RETURN n, r, m
