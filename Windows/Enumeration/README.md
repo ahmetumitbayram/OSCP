@@ -1,3 +1,5 @@
+Windows standalone bir makinenin pentesti sırasında **enumeration (bilgi toplama)** safhası, başarılı bir saldırı gerçekleştirebilmek için kritik bir adımdır. Aşağıda bu süreci adım adım detaylı şekilde ele alalım:
+
 ---
 
 ### **1. Sistem Bilgilerini Toplama**
@@ -210,3 +212,5 @@
 3. **İleri seviye saldırılar için yollar hazırlayın**:
    - SMB share'leri kullanarak erişim sağlama.
    - Planlanmış görevlerdeki zafiyetleri analiz etme.
+
+Bu rehber hem manuel hem de otomasyon araçları ile geniş kapsamlı bilgi toplama sürecini içerir. İhtiyacınıza göre adımları daha da özelleştirebilirsiniz.
