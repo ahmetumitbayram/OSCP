@@ -1,5 +1,3 @@
-```md
-
 ## 1. ADaclScanner
 **Kısa Tanım**: AD’deki ACL (Access Control List) yapılarını tarar, zafiyetli izinleri bulur.  
 **Usage**:
