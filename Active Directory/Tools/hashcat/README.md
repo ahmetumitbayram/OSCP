@@ -1,3 +1,34 @@
+Hash Türü	Hashcat Mode ID
+Windows Hashleri	
+NTLM	1000
+NetNTLMv1	5500
+NetNTLMv1+ESS	5600
+NetNTLMv2	5600
+Kerberos 5 AS-REP (AES)	18200
+Linux Hashleri	
+MD5-Crypt	500
+SHA256-Crypt	7400
+SHA512-Crypt	1800
+bcrypt (Blowfish)	3200
+Genel Hash Algoritmaları	
+MD5	0
+SHA-1	100
+SHA-256	1400
+SHA-512	1700
+LM Hash	3000
+Wi-Fi Hashleri	
+WPA/WPA2	22000
+Veritabanı Hashleri	
+MySQL 4.1+ (SHA1)	300
+MySQL 5+ SHA256	7401
+MSSQL 2000	131
+MSSQL 2005	132
+MSSQL 2012+	1731
+Active Directory Hashleri	
+Kerberos 5 AS-REP Roasting	18200
+Kerberos 5 TGS-REP Hash	13100
+
+
 # Hashcat Kullanım Kılavuzu
 
 ## Giriş
