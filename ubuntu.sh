@@ -1,9 +1,3 @@
-# Download the Mullvad signing key
-sudo curl -fsSLo /usr/share/keyrings/mullvad-keyring.asc https://repository.mullvad.net/deb/mullvad-keyring.asc
-
-# Add the Mullvad repository server to apt
-echo "deb [signed-by=/usr/share/keyrings/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/mullvad.list
-
-# Install the package
-sudo apt update
-sudo apt install mullvad-vpn
+sudo nft add table inet excludeTraffic
+sudo nft add chain inet excludeTraffic excludeOutgoing { type route hook output priority 0 \; policy accept \; }
+sudo nft add rule inet excludeTraffic excludeOutgoing ip daddr 192.168.1.0/24 meta mark set 0x1
